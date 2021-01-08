@@ -3,21 +3,24 @@
 Source code for: Climate change scenarios at hourly time-step over Switzerland
 from an enhanced temporal downscaling approach
 
-Adrien Michel, Varun Sharma, Hendrik Huwald, Michael Lehning
+Adrien Michel, Varun Sharma, Michael Lehning, and Hendrik Huwald
+
+International Journal of Climatology, 2021
 
 School of Architecture, Civil and Environmental Engineering, Ecole Polytechnique
-Fédérale de Lausanne (EPFL), Lausanne, Switzerland}
+Fédérale de Lausanne (EPFL), Lausanne, Switzerland
 
 WSL Institute for Snow and Avalanche Research (SLF), Davos, Switzerland
 
 ## Introduction
 This repository contains the source code of the analysis presented in the paper:
 Climate change scenarios at hourly time-step over Switzerland from an enhanced
-temporal downscaling approach, currently under review in the International
+temporal downscaling approach, published in the International
 Journal of Climatology.
 
 This code can be used to perform temporal downscaling of meteorological time
-series from daily to hourly timesteps and to perform the quality assessment described in the paper.
+series from daily to hourly timesteps and to perform the quality assessment
+described in the paper.
 
 ## Code provided
 The code to perform the temporal downscaling is provided in the directory
@@ -26,11 +29,10 @@ directory '2_assessment'. READMEs with usage instructions are provided in
 these directories.
 
 ## Data provided
-The dataset described in the paper will be published at paper publication time.
-The link will be provided here.
+The dataset described in the paper are available at:
 
 ## License
-Copyright (C) 2020, Adrien Michel, EPFL
+Copyright (C) 2021, Adrien Michel, EPFL
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
