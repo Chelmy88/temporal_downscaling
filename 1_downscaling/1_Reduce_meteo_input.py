@@ -20,7 +20,7 @@ import warnings
 #
 # This code is related to the paper: Climate change scenarios at hourly time-step
 # over Switzerland from an enhanced temporal downscaling approach,
-# publiched in the International Journal of Climatology.
+# published in the International Journal of Climatology.
 #
 # Copyright (C) 2021, Adrien Michel, EPFL
 #
@@ -101,7 +101,10 @@ def loadData(filename):
     return header, vars, dates
 
 
+########## CUT DATA AND REMOVE VARIABLES WHERE NODATA COUNT IS ABOVE THRESHOLD #####################
+
 def cutData(header, vars, dates):
+  # Cut data
   global starting_date
   global ending_date
   try:
@@ -119,11 +122,13 @@ def cutData(header, vars, dates):
   for var in vars:
     vars[var] = vars[var][start_date:end_date]
 
+  # Remove variables where nodata cont is above threshold
+  no_data_threshold=1000
   vars_to_remove = []
   for var in vars:
     i = 0
     count_nodata = vars[var].count('-999')
-    if(count_nodata >= 1000):
+    if(count_nodata >= no_data_threshold):
       print("\t[W]", var, "removed because of to much inner no data")
       vars_to_remove.append(var)
 
@@ -151,8 +156,6 @@ def writeData(file, header, writer):
     for line in writer:
       write_file.write(line + "\n")
 
-##########################
-
 
 #### MAIN ####
 
@@ -161,7 +164,7 @@ def main():
   global loaded_data
   print("[I] Checking input")
 
-  # Gather available data files and legend files
+  # Gather available data files
   files = []
   for file in os.listdir(input):
     if (os.path.isfile(input + "/" + file) and file.endswith(".smet")):

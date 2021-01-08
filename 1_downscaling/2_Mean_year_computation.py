@@ -21,7 +21,7 @@ import multiprocessing as mp
 #
 # This code is related to the paper: Climate change scenarios at hourly time-step
 # over Switzerland from an enhanced temporal downscaling approach,
-# currently under review in the International Journal of Climatology.
+# published in the International Journal of Climatology.
 #
 # Copyright (C) 2021, Adrien Michel, EPFL
 #
@@ -41,7 +41,7 @@ import multiprocessing as mp
 
 class ReadHistorical:
 
-  ##### TO BE REPLACED BY NEW FUNCTIONS DEPENDONG ON INPUT DATA PROVIDED ####
+  ##### TO BE REPLACED BY NEW FUNCTIONS DEPENDING ON INPUT DATA PROVIDED ####
 
   def __init__(self,station,meteo_path):
     self.__station=station
@@ -83,11 +83,11 @@ class ReadHistorical:
     self.__cut_data(period)
     self.__compute_doy_mean()
     self.__print_to_file(output_path,period)
-########## INPUT READING FUNCTIONS #####################
 
+########## INPUT READING FUNCTIONS #####################
 class ReadScenario:
 
-    ##### TO BE REPLACED BY NEW FUNCTIONS DEPENDONG ON INPUT DATA PROVIDED ####
+    ##### TO BE REPLACED BY NEW FUNCTIONS DEPENDING ON INPUT DATA PROVIDED ####
 
   __vars={"TA":"tas","PSUM":"pr","ISWR":"rsds","RH":"hurs","VW":"sfcWind"}
 
@@ -97,7 +97,7 @@ class ReadScenario:
     self.__variables_path=variables
     self.__scenario=scenario
 
-    # Read data for all variables and store in a dict
+    # Read data for all variables and store in a dictionary
     to_concatenate=dict()
     for var in variables:
       data_tmp=self.__read_scenario_data_file(var)
@@ -108,7 +108,7 @@ class ReadScenario:
       self.data=pd.DataFrame()
       return
 
-    # Transform the dist into a PD dataframe
+    # Transform the dictionary into a PD dataframe
     self.data=self.__concatenate_scenario(to_concatenate)
 
   def __read_scenario_data_file(self,variable):
@@ -127,7 +127,7 @@ class ReadScenario:
           pos_read=pos_read+1
           if line.startswith("DATE;VALUE"):
             break
-      # Read data and remove leap
+      # Read data and remove leap days
       data=pd.read_csv(file_name, delimiter = '[ \t]*;[ \t]*', dtype=np.float64,na_values='NA', \
                        skiprows=pos_read, engine='python', names=[variable], index_col=0, parse_dates=[0])
       data = data[~((data.index.month == 2) & (data.index.day == 29))]
@@ -178,7 +178,7 @@ def compute_scenario(station,input_CH2018,variables,periods,scenario,output):
 def main():
   currDir = os.path.dirname(os.path.realpath(__file__))
 
-  # Variables to be wdited by user
+  # Variables to be edited by user
 
   input_meteo = currDir+'/SMET_MCH_COMPLETE_REDUCED_10/'
   input_CH2018 = currDir+'/../CH2018/QMstations/'
