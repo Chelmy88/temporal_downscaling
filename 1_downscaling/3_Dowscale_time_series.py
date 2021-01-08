@@ -42,7 +42,7 @@ import copy
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
 ###
 
 ########## HARMONIC FITTING FUNCTIONS ###################
@@ -218,9 +218,8 @@ def get_dates(historical_data,periods,historical_period):
 
 
 # Do the actual dowscaling for the provided sttion, scenario and periods
-def do_downscale(station,historical_data,historical_doy,scenario,periods,hist_period,dates,h,input_DOY,output):
+def do_downscale(station,historical_data,historical_doy,scenario,periods,hist_period,dates,j,input_DOY,output):
   for i in range(len(periods)):
-    print(station,h,scenario,str(periods[i][0])+"_"+str(periods[i][1]))
     # Read DOY means
     path = input_DOY + station + "/" + scenario + "/" + station + "_" + \
        scenario + "_" + str(periods[i][0]) + "_" + str(periods[i][1])
@@ -232,13 +231,13 @@ def do_downscale(station,historical_data,historical_doy,scenario,periods,hist_pe
      # Do the downscaling
      if var == "TA":
        deltas = getHarmonic(
-           scenario_doy.data[var], h) - getHarmonic(historical_doy.data[var], h)
+           scenario_doy.data[var], j) - getHarmonic(historical_doy.data[var], j)
        deltas=np.repeat(deltas,24)
        deltas=np.tile(deltas,periods[i][1]-periods[i][0]+1)
        dowscaled_data.data[var] = dowscaled_data.data[var] + deltas
      else:
        deltas = getHarmonic(
-           scenario_doy.data[var], h)/getHarmonic(historical_doy.data[var], h)
+           scenario_doy.data[var], j)/getHarmonic(historical_doy.data[var], j)
        deltas=np.repeat(deltas,24)
        deltas=np.tile(deltas,periods[i][1]-periods[i][0]+1)
        dowscaled_data.data[var] = dowscaled_data.data[var] * deltas
@@ -258,7 +257,7 @@ def main():
   ### VARIABLES TO BE SET ###
   input_meteo = currDir + '/SMET_MCH_COMPLETE_REDUCED_30/'
   input_DOY = currDir + '/DOY_30/'
-  h_table = [3,5,7,9,11,13,15]
+  j_table = [3,5,7,9,11,13,15]
 
   hist_period=[1985, 2015]
 
@@ -271,8 +270,8 @@ def main():
 
   stations=[x.replace('.smet','') for x in files]
 
-  for h in h_table:
-    output = currDir + '/output_30_'+str(h)+'/'
+  for j in j_table:
+    output = currDir + '/output_30_'+str(j)+'/'
 
     scenarios=["CLMCOM-CCLM4_ECEARTH_EUR11_RCP45", \
           "CLMCOM-CCLM4_ECEARTH_EUR11_RCP85", \
@@ -362,9 +361,9 @@ def main():
       # pool = mp.Pool(10)
       for scenario in scenarios:
         ### COMMENT LINE FOR PARALLEL EXECUTION ###
-        do_downscale(station,historical_data,historical_doy,scenario,periods,hist_period,dates,h,input_DOY,output)
+        do_downscale(station,historical_data,historical_doy,scenario,periods,hist_period,dates,j,input_DOY,output)
         ### UNCOMMENT LINES BELOW FOR PARALLEL EXECUTION ###
-        #pool.apply_async(do_downscale,[station,historical_data,historical_doy,scenario,periods,hist_period,dates,h,input_DOY,output])
+        #pool.apply_async(do_downscale,[station,historical_data,historical_doy,scenario,periods,hist_period,dates,j,input_DOY,output])
       #pool.close()
       #pool.join()
 
