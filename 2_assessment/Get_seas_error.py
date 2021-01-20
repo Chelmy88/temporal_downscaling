@@ -5,6 +5,31 @@ import pandas as pd
 import numpy as np
 import multiprocessing as mp
 
+###
+# This code allows to extract seasonnal means from hourly downscaled timeseries.
+# The seasonnal mean computed with this script should be further used in the
+# script plot_assessment.R
+#
+# This code is related to the paper: Climate change scenarios at hourly time-step
+# over Switzerland from an enhanced temporal downscaling approach,
+# published in the International Journal of Climatology.
+#
+# Copyright (C) 2021, Adrien Michel, EPFL
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
+###
+
 LOOKUP_SEASON = {
     11: '4Autumn',
     12: '1Winter',
@@ -21,18 +46,10 @@ LOOKUP_SEASON = {
 
 def get_season(x):
     return(LOOKUP_SEASON[x.month])
-# Object to read and store historical data set
+
 class ReadSmet:
-  ##### TO BE REPLACED BY NEW FUNCTIONS DEPENDONG ON INPUT DATA PROVIDED ####
-  ##### The function should store a panda data frame in self.data with dates as indices
-  ##### and variables names as column names
-  ##### Should also contain:
-  ##### __station = station name
-  ##### __header = header from input file to be copied in output files, might be empty
-  ##### variables = list of variables in the data frame
-
   def __init__(self,currDir,station,scenario,period,h,length):
-
+    # Adapt path if needed to find input downscaled data
     data_file=currDir+"/output_"+str(length)+"_"+str(h)+"/"+station+"/"+period+"/"+station+"_"+scenario+"_"+period+".smet"
     # Read header and fields
     print("Reading ",data_file)
@@ -94,9 +111,6 @@ def do_work(station,periods,scenarios,h_table,length):
                           "ISWR_DJF","ISWR_MAM","ISWR_JJA","ISWR_SON", \
                           "VW_DJF","VW_MAM","VW_JJA","VW_SON", \
                           "scenario","period","h"])+"\n")
-
-
-
   #os.makedirs(output, exist_ok=True)
     for h in h_table:
       print(h_table)
@@ -108,10 +122,8 @@ def do_work(station,periods,scenarios,h_table,length):
 def main():
   stations=["ABO","BAS","CDF","CHU","COV","DIS","GVE","KLO","LUG","LUZ","OTL","PAY","ROB","SAM","SBE","SCU","SHA","SIO","WFJ","ZER"]
   h_table=['3','5',"7",'9','11','13','15']
-  #periods=["1980_2010","2010_2040","2040_2070","2070_2100"]
-  #length=30
-  periods=["1980_1990","1990_2000","2000_2010","2010_2020","2020_2030","2030_2040","2040_2050","2050_2060","2060_2070","2070_2080","2080_2090","2090_2100"]
-  length=10
+  periods=["1980_2010","2010_2040","2040_2070","2070_2100"]
+  length=30
 
   scenarios=["CLMCOM-CCLM4_ECEARTH_EUR11_RCP45", \
           "CLMCOM-CCLM4_ECEARTH_EUR11_RCP85", \
@@ -182,12 +194,16 @@ def main():
           "SMHI-RCA_NORESM_EUR44_RCP45", \
           "SMHI-RCA_NORESM_EUR44_RCP85"]
 
-  pool = mp.Pool(10)
+  # Loop over scenarios and do the computation
+  ### UNCOMMENT LINE BELOW FOR PARALLEL EXECUTION ###
+  # pool = mp.Pool(10)
   for station in stations:
-    #do_work(station,periods,scenarios,h_table,length)
-    pool.apply_async(do_work,[station,periods,scenarios,h_table,length])
-  pool.close()
-  pool.join()
+    ### COMMENT LINE FOR PARALLEL EXECUTION ###
+    do_work(station,periods,scenarios,h_table,length)
+    ### UNCOMMENT LINES BELOW FOR PARALLEL EXECUTION ###
+    #pool.apply_async(do_work,[station,periods,scenarios,h_table,length])
+  #pool.close()
+  #pool.join()
 
 if __name__ == "__main__":
   main()
