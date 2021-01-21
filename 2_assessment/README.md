@@ -31,6 +31,12 @@ Please see the instruction at the beginning of each script. The scripts are
 adapted to the datasets used in the paper. Instructions about where and how to
 modify the scripts in order to use different data source are given in the scripts.
 
+## Citation
+This repository should be cited as:
+Michel, A., 2021. Source code for: Climate change scenarios at hourly time-step
+over Switzerland from an enhanced temporal downscaling approach. EnviDat.
+doi:10.16904/envidat.203.
+
 ## License
 Copyright (C) 2021, Adrien Michel, EPFL
 

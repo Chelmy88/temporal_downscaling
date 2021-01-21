@@ -27,8 +27,14 @@ directory '2_assessment'. README files with usage instructions are provided in
 these directories.
 
 ## Data provided
-The datasets described in the paper are available at:
+The datasets described in the paper and produced with this code are available at:
+https://www.envidat.ch/dataset/climate-change-scenarios-at-hourly-resolution
 
+## Citation
+This repository should be cited as:
+Michel, A., 2021. Source code for: Climate change scenarios at hourly time-step
+over Switzerland from an enhanced temporal downscaling approach. EnviDat.
+doi:10.16904/envidat.203.
 
 ## License
 Copyright (C) 2021, Adrien Michel, EPFL
