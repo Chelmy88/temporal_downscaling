@@ -12,7 +12,7 @@ import multiprocessing as mp
 #
 # This code is related to the paper: Climate change scenarios at hourly time-step
 # over Switzerland from an enhanced temporal downscaling approach,
-# published in the International Journal of Climatology.
+# published in the International Journal of Climatology, doi:10.1002/joc.7032
 #
 # Copyright (C) 2021, Adrien Michel, EPFL
 #

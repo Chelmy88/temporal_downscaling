@@ -4,7 +4,7 @@ Source code for:
 Climate change scenarios at hourly time step over Switzerland
 from an enhanced temporal downscaling approach
 
-International Journal of Climatology, 2021
+International Journal of Climatology, 2021, doi:10.1002/joc.7032
 
 Adrien Michel, Varun Sharma, Michael Lehning, and Hendrik Huwald
 
